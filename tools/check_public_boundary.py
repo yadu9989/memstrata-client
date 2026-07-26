@@ -8,6 +8,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 ALLOWED_TOP_LEVEL = {
     ".github",
+    ".gitattributes",
     ".gitignore",
     "CODE_OF_CONDUCT.md",
     "CONTRIBUTING.md",
@@ -17,6 +18,7 @@ ALLOWED_TOP_LEVEL = {
     "SECURITY.md",
     "docs",
     "examples",
+    "packaging",
     "pyproject.toml",
     "src",
     "tests",

@@ -6,3 +6,13 @@ __pycache__/
 .pytest_cache/
 .ruff_cache/
 *.py[cod]
+packaging/**/build/
+packaging/**/dist/
+packaging/**/payload/
+packaging/**/*.msix
+packaging/**/*.msixupload
+packaging/**/*.pkg
+packaging/**/*.dmg
+packaging/**/*.snap
+packaging/**/*.AppImage
+packaging/**/*.flatpak

@@ -1,0 +1,7 @@
+* text=auto
+*.sh text eol=lf
+AppRun text eol=lf
+apply_extra text eol=lf
+memstrata-runtime text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf

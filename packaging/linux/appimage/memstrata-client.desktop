@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=MemStrata Client Runtime
+Comment=Commercial runtime companion for the open MemStrata client
+Exec=memstrata-runtime
+Icon=memstrata-client
+Type=Application
+Terminal=true
+Categories=Development;Utility;

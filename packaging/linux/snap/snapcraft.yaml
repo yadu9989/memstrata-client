@@ -1,0 +1,23 @@
+name: memstrata-client
+base: core24
+version: '0.1.0'
+summary: Commercial runtime companion for the open MemStrata client
+description: |
+  Installs the separately licensed MemStrata evaluation runtime. This package
+  does not include the Apache-2.0 Python client or grant a runtime license.
+grade: devel
+confinement: strict
+
+platforms:
+  amd64:
+
+apps:
+  runtime:
+    command: bin/memstrata-eval-runtime --state-dir $SNAP_USER_DATA/eval-runtime
+
+parts:
+  runtime:
+    plugin: dump
+    source: payload
+    organize:
+      memstrata-eval-runtime: bin/memstrata-eval-runtime

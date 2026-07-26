@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "product": "MemStrata Client",
+  "runtime_command": "memstrata-eval-runtime",
+  "version": "0.1.0",
+  "windows": {
+    "identity_name": "8351CalledItInc.memstrata-client",
+    "publisher": "CN=BACE8B9E-8F65-4CF8-A7D4-808FE337B2B7",
+    "publisher_display_name": "Called It Inc",
+    "package_family_name": "8351CalledItInc.memstrata-client_xpfq096y27j6m",
+    "package_sid": "S-1-15-2-2123964564-1467980924-2808247185-3539819490-1374965942-1238869379-2120149812",
+    "store_id": "9MX65HPK0VX9"
+  },
+  "flatpak": {
+    "app_id": "io.github.yadu9989.MemStrataClient"
+  },
+  "snap": {
+    "name": "memstrata-client"
+  }
+}
