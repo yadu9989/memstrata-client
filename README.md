@@ -3,6 +3,7 @@
 [![CI](https://github.com/yadu9989/memstrata-client/actions/workflows/ci.yml/badge.svg)](https://github.com/yadu9989/memstrata-client/actions/workflows/ci.yml)
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.10%2B-3776AB.svg)](https://www.python.org/)
+[![PyPI publishing](https://img.shields.io/badge/PyPI-Trusted%20Publishing-3775A9.svg)](.github/workflows/release.yml)
 
 An open Python API and CLI for a separately installed MemStrata runtime.
 
@@ -89,3 +90,13 @@ the source assertion is true; the client preserves
 - Report vulnerabilities privately as described in [SECURITY.md](SECURITY.md).
 
 Apache-2.0. See [NOTICE](NOTICE).
+
+## Distribution and commercial runtime packages
+
+The Python client is prepared for tokenless PyPI Trusted Publishing. The
+separate commercial runtime can be staged into MSIX, notarized macOS PKG, Snap,
+AppImage, or Flatpak packages without putting the runtime in this repository.
+See [Distribution](docs/DISTRIBUTION.md) and [Packaging](packaging/README.md).
+
+The packaging templates are open build infrastructure. They do not grant a
+license to, contain, download, or reveal the commercial runtime.

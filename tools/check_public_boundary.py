@@ -8,6 +8,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 ALLOWED_TOP_LEVEL = {
     ".github",
+    ".gitattributes",
     ".gitignore",
     "CODE_OF_CONDUCT.md",
     "CONTRIBUTING.md",
@@ -17,6 +18,7 @@ ALLOWED_TOP_LEVEL = {
     "SECURITY.md",
     "docs",
     "examples",
+    "packaging",
     "pyproject.toml",
     "src",
     "tests",
@@ -24,6 +26,7 @@ ALLOWED_TOP_LEVEL = {
 }
 IGNORED_PARTS = {
     ".git",
+    ".flatpak-builder",
     ".pytest_cache",
     ".ruff_cache",
     ".venv",
@@ -53,6 +56,25 @@ FORBIDDEN_SUFFIXES = {
 MAX_FILE_BYTES = 1_000_000
 
 
+def _is_ignored(path: Path) -> bool:
+    if any(part in IGNORED_PARTS for part in path.parts):
+        return True
+    try:
+        relative = path.relative_to(ROOT)
+    except ValueError:
+        return False
+    return (
+        len(relative.parts) >= 4
+        and relative.parts[:3] == ("packaging", "linux", "snap")
+        and relative.parts[3]
+        in {".craft", ".snapcraft", "parts", "prime", "stage", "payload"}
+    ) or (
+        len(relative.parts) >= 4
+        and relative.parts[:3] == ("packaging", "linux", "flatpak")
+        and relative.parts[3] in {"build", "payload", "repo"}
+    )
+
+
 def _python_imports(path: Path) -> set[str]:
     try:
         tree = ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
@@ -76,7 +98,13 @@ def scan() -> list[str]:
             failures.append(f"non-allowlisted top-level path: {child.name}")
 
     for path in ROOT.rglob("*"):
-        if not path.is_file() or any(part in IGNORED_PARTS for part in path.parts):
+        if _is_ignored(path):
+            continue
+        try:
+            if not path.is_file():
+                continue
+        except OSError as exc:
+            failures.append(f"cannot inspect {path}: {exc}")
             continue
         relative = path.relative_to(ROOT)
         if path.suffix.lower() in FORBIDDEN_SUFFIXES:

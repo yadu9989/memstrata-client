@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+set -eu
+: "${APPDIR:?APPDIR is required}"
+state_root="${XDG_DATA_HOME:-$HOME/.local/share}/memstrata/eval-runtime"
+exec "$APPDIR/usr/bin/memstrata-eval-runtime" --state-dir "$state_root" "$@"

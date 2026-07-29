@@ -1,0 +1,35 @@
+{
+  "id": "io.github.yadu9989.MemStrataClient",
+  "runtime": "org.freedesktop.Platform",
+  "runtime-version": "25.08",
+  "sdk": "org.freedesktop.Sdk",
+  "command": "memstrata-runtime",
+  "finish-args": [],
+  "modules": [
+    {
+      "name": "memstrata-runtime",
+      "buildsystem": "simple",
+      "build-commands": [
+        "install -Dm755 memstrata-runtime /app/bin/memstrata-runtime",
+        "install -Dm755 apply_extra /app/bin/apply_extra"
+      ],
+      "sources": [
+        {
+          "type": "extra-data",
+          "filename": "memstrata-eval-runtime",
+          "url": "@RUNTIME_URL@",
+          "sha256": "@RUNTIME_SHA256@",
+          "size": @RUNTIME_SIZE@
+        },
+        {
+          "type": "file",
+          "path": "memstrata-runtime"
+        },
+        {
+          "type": "file",
+          "path": "apply_extra"
+        }
+      ]
+    }
+  ]
+}

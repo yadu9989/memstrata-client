@@ -1,0 +1,4 @@
+#!/bin/sh
+set -eu
+install -Dm755 /app/extra/memstrata-eval-runtime /app/libexec/memstrata-eval-runtime
+rm -f /app/extra/memstrata-eval-runtime
