@@ -17,7 +17,7 @@ evaluation corpora, or licensing enforcement.
 ```bash
 python -m venv .venv
 source .venv/bin/activate  # Windows: .venv\Scripts\activate
-pip install -e .
+pip install memstrata-client
 memstrata-client init --mock
 echo '[{"role":"user","content":"The Atlas migration completed."}]' \
   | memstrata-client process
