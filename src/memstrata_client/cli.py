@@ -27,8 +27,8 @@ def _cmd_init(args: argparse.Namespace) -> int:
         document = json.loads(Path(args.license_file).read_text(encoding="utf-8"))
         if not isinstance(document, dict):
             raise ValueError("license document must be a JSON object")
-        activation = client.activate(document)
-    status = client.status()
+        activation = dict(client.activate(document))
+    status = dict(client.status())
     print(
         json.dumps(
             {
@@ -45,7 +45,7 @@ def _cmd_init(args: argparse.Namespace) -> int:
 
 
 def _cmd_doctor(_args: argparse.Namespace) -> int:
-    print(json.dumps(MemStrata().status(), indent=2, sort_keys=True))
+    print(json.dumps(dict(MemStrata().status()), indent=2, sort_keys=True))
     return 0
 
 
