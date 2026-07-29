@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>io.github.yadu9989.MemStrataClient</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>LicenseRef-proprietary</project_license>
+  <name>MemStrata Client Runtime</name>
+  <summary>Commercial runtime companion for the open MemStrata client</summary>
+  <description>
+    <p>
+      Processes MemStrata protocol requests from the separately installed
+      Apache-2.0 Python client under a commercial evaluation entitlement.
+    </p>
+  </description>
+  <launchable type="desktop-id">memstrata-client.desktop</launchable>
+  <url type="homepage">https://github.com/yadu9989/memstrata-client</url>
+  <content_rating type="oars-1.1" />
+</component>

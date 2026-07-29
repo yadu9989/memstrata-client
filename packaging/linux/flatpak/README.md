@@ -20,3 +20,8 @@ and byte size of a signed native Linux runtime.
 The proposed ID is `io.github.yadu9989.MemStrataClient`. Flathub must approve
 the ID/ownership and the extra-data licensing model. Do not claim Flathub
 availability until its review passes.
+
+Flathub is primarily an app store, while this artifact is currently a
+stdin/stdout command-line companion. Acceptance is not assumed. Obtain Flathub
+maintainer confirmation before investing in store metadata; otherwise publish
+the signed Flatpak bundle through the controlled release channel.

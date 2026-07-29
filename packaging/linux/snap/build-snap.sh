@@ -17,7 +17,7 @@ install -m 0755 "$runtime" "$payload/memstrata-eval-runtime"
 
 (
   cd "$script_dir"
-  snapcraft --output "$dist/memstrata-client_0.1.0_amd64.snap"
+  snapcraft pack --destructive-mode --output "$dist/memstrata-client_0.1.0_amd64.snap"
 )
 
 sha256sum "$dist/memstrata-client_0.1.0_amd64.snap"

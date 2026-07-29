@@ -22,3 +22,7 @@ Before publishing:
 The package requests no interfaces because the prototype is offline and uses
 stdin/stdout plus snap-owned state. Add `network` only when a reviewed lease
 client actually requires it.
+
+The local script uses Snapcraft destructive mode because it has no build
+dependencies and merely stages a prebuilt native runtime. Run it on a disposable
+build host; the release pipeline should use an isolated Snapcraft build service.

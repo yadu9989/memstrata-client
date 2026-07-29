@@ -42,6 +42,12 @@ def main() -> int:
     require("source: payload" in snap, "snap must use operator-staged payload")
     require("confinement: strict" in snap, "snap must remain strictly confined")
 
+    appimage_script = (
+        ROOT / "linux" / "appimage" / "build-appimage.sh"
+    ).read_text(encoding="utf-8")
+    require("--runtime-file" in appimage_script, "AppImage build must pin its runtime stub")
+    ET.parse(ROOT / "linux" / "appimage" / "memstrata-client.appdata.xml")
+
     flatpak = json.loads(
         (ROOT / "linux" / "flatpak" / "io.github.yadu9989.MemStrataClient.json.in").read_text(
             encoding="utf-8"
@@ -55,15 +61,22 @@ def main() -> int:
     require(source["type"] == "extra-data", "Flatpak public manifest must use extra-data")
 
     forbidden_suffixes = {".exe", ".dll", ".dylib", ".so", ".msix", ".pkg", ".snap", ".AppImage"}
-    ignored_parts = {"build", "dist", "payload"}
-    leaked = [
-        str(path.relative_to(ROOT))
-        for path in ROOT.rglob("*")
-        if path.is_file()
-        and not any(part in ignored_parts for part in path.relative_to(ROOT).parts)
-        and path.suffix in forbidden_suffixes
-    ]
+    ignored_parts = {"build", "dist", "parts", "payload", "prime", "stage"}
+    leaked: list[str] = []
+    unreadable: list[str] = []
+    for path in ROOT.rglob("*"):
+        relative = path.relative_to(ROOT)
+        if any(part in ignored_parts for part in relative.parts):
+            continue
+        try:
+            is_file = path.is_file()
+        except OSError as exc:
+            unreadable.append(f"{relative}: {exc}")
+            continue
+        if is_file and path.suffix in forbidden_suffixes:
+            leaked.append(str(relative))
     require(not leaked, f"binary/package artifacts must not be committed: {leaked}")
+    require(not unreadable, f"packaging paths cannot be inspected: {unreadable}")
     print("packaging contract: PASS")
     return 0
 

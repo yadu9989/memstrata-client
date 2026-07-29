@@ -5,4 +5,4 @@ Exec=memstrata-runtime
 Icon=memstrata-client
 Type=Application
 Terminal=true
-Categories=Development;Utility;
+Categories=Development;
