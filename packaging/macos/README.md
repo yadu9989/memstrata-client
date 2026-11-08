@@ -26,7 +26,7 @@ Build:
 ```bash
 ./packaging/macos/build-pkg.sh \
   --runtime /secure-release/memstrata-eval-runtime \
-  --version 0.1.0 \
+  --version 0.2.0 \
   --application-identity "Developer ID Application: Called It Inc (<TEAM-ID>)" \
   --installer-identity "Developer ID Installer: Called It Inc (<TEAM-ID>)" \
   --notary-profile memstrata-notary
@@ -35,9 +35,9 @@ Build:
 Verify on a clean supported Mac:
 
 ```bash
-pkgutil --check-signature packaging/macos/dist/memstrata-client-0.1.0.pkg
-spctl --assess --type install --verbose=4 packaging/macos/dist/memstrata-client-0.1.0.pkg
-sudo installer -pkg packaging/macos/dist/memstrata-client-0.1.0.pkg -target /
+pkgutil --check-signature packaging/macos/dist/memstrata-client-0.2.0.pkg
+spctl --assess --type install --verbose=4 packaging/macos/dist/memstrata-client-0.2.0.pkg
+sudo installer -pkg packaging/macos/dist/memstrata-client-0.2.0.pkg -target /
 memstrata-runtime
 ```
 

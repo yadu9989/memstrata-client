@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# SPDX-License-Identifier: Apache-2.0
+# Copyright 2026 Called It Inc.
 set -euo pipefail
 
 if [[ $# -ne 1 || ! -f "$1" ]]; then
@@ -17,8 +19,8 @@ install -m 0755 "$runtime" "$payload/memstrata-eval-runtime"
 
 (
   cd "$script_dir"
-  snapcraft pack --destructive-mode --output "$dist/memstrata-client_0.1.0_amd64.snap"
+  snapcraft pack --destructive-mode --output "$dist/memstrata-client_0.2.0_amd64.snap"
 )
 
-sha256sum "$dist/memstrata-client_0.1.0_amd64.snap"
-echo "Local test only: sudo snap install --dangerous $dist/memstrata-client_0.1.0_amd64.snap"
+sha256sum "$dist/memstrata-client_0.2.0_amd64.snap"
+echo "Local test only: sudo snap install --dangerous $dist/memstrata-client_0.2.0_amd64.snap"

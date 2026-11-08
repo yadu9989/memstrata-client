@@ -1,4 +1,6 @@
 #!/usr/bin/env sh
+# SPDX-License-Identifier: Apache-2.0
+# Copyright 2026 Called It Inc.
 set -eu
 : "${APPDIR:?APPDIR is required}"
 state_root="${XDG_DATA_HOME:-$HOME/.local/share}/memstrata/eval-runtime"

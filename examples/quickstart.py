@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: Apache-2.0
+# Copyright 2026 Called It Inc.
 """Run with the synthetic runtime; no API key, model, or network is used."""
 
 import sys

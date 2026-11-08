@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: Apache-2.0
+# Copyright 2026 Called It Inc.
 """Non-secret local client configuration."""
 
 from __future__ import annotations

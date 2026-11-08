@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: Apache-2.0
+# Copyright 2026 Called It Inc.
 """Immutable public request and response values."""
 
 from __future__ import annotations
@@ -34,17 +36,6 @@ def _optional_text(value: Any, label: str, *, maximum: int = 4096) -> str | None
     if value is None:
         return None
     return _required_text(value, label, maximum=maximum)
-
-
-def _string_list(value: Any, label: str, *, maximum: int = 512) -> tuple[str, ...]:
-    if not isinstance(value, list) or len(value) > maximum:
-        raise ProtocolError(f"{label} must be a list with at most {maximum} entries")
-    result: list[str] = []
-    for index, item in enumerate(value):
-        result.append(_required_text(item, f"{label}[{index}]", maximum=4096))
-    if len(set(result)) != len(result):
-        raise ProtocolError(f"{label} contains duplicate identifiers")
-    return tuple(result)
 
 
 @dataclass(frozen=True)

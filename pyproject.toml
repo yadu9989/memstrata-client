@@ -4,12 +4,12 @@ build-backend = "hatchling.build"
 
 [project]
 name = "memstrata-client"
-version = "0.1.1"
-description = "Open client and protocol validator for MemStrata runtimes"
+dynamic = ["version"]
+description = "Open-source clients and integrations for the MemStrata™ app"
 readme = "README.md"
 requires-python = ">=3.10"
 license = "Apache-2.0"
-authors = [{ name = "MemStrata" }]
+authors = [{ name = "MemStrata", email = "support@memstrata.dev" }]
 keywords = ["ai-agents", "memory", "evidence", "audit", "context"]
 classifiers = [
   "Development Status :: 3 - Alpha",
@@ -18,11 +18,21 @@ classifiers = [
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
   "Topic :: Software Development :: Libraries :: Python Modules",
 ]
-dependencies = []
+dependencies = ["httpx>=0.27,<1", "keyring>=25,<26"]
 
 [project.optional-dependencies]
+mcp = ["mcp>=1.29,<2"]
+keyring = ["keyring>=25,<26"]
+langchain = ["langchain-core>=1.0,<2"]
+langgraph = ["langchain-core>=1.0,<2", "langgraph==1.2.17"]
+crewai = ["crewai==1.15.30; python_version < '3.14'"]
+autogen = ["autogen-core==0.7.5"]
+ag2 = ["ag2==1.2.1"]
+llamaindex = ["llama-index-core==0.14.25"]
 dev = [
   "build>=1.2",
   "pytest>=8",
@@ -32,6 +42,7 @@ dev = [
 
 [project.scripts]
 memstrata-client = "memstrata_client.cli:main"
+memstrata-mcp = "memstrata_client.mcp_cli:main"
 
 [project.urls]
 Homepage = "https://github.com/yadu9989/memstrata-client"
@@ -40,6 +51,9 @@ Issues = "https://github.com/yadu9989/memstrata-client/issues"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/memstrata_client"]
+
+[tool.hatch.version]
+path = "src/memstrata_client/_version.py"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
@@ -52,3 +66,11 @@ target-version = "py310"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP"]
+
+# The four protocol modules are frozen: tests/test_cl1_parity.py checks their SHA-256.
+# Only formatting/import-order diagnostics are exempt; correctness checks remain.
+[tool.ruff.lint.per-file-ignores]
+"src/memstrata_client/cl1.py" = ["E501", "E701", "E702", "I001"]
+"src/memstrata_client/cl1_credentials.py" = ["E501", "E701", "E702", "I001"]
+"src/memstrata_client/mcp.py" = ["E501", "E701", "E702", "I001"]
+"src/memstrata_client/langchain.py" = ["E501", "E701", "E702", "I001"]

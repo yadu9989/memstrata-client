@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: Apache-2.0
+# Copyright 2026 Called It Inc.
 """High-level public client."""
 
 from __future__ import annotations

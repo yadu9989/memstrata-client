@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: Apache-2.0
+# Copyright 2026 Called It Inc.
 from __future__ import annotations
 
 import json
@@ -59,3 +61,7 @@ def test_langchain_adapter_without_dependency() -> None:
 def test_langchain_adapter_fails_unknown_shape() -> None:
     with pytest.raises(ProtocolError):
         from_langchain([FakeLangChainMessage("function", "call")])
+def test_mcp_default_uses_product_memory_service_port():
+    from memstrata_client.mcp_cli import parser
+    assert parser().parse_args(["--project", "synthetic"]).url == "http://127.0.0.1:9101"
+

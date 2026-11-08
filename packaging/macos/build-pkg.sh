@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# SPDX-License-Identifier: Apache-2.0
+# Copyright 2026 Called It Inc.
 set -euo pipefail
 
 usage() {
@@ -13,7 +15,7 @@ EOF
 }
 
 runtime=""
-version="0.1.0"
+version="0.2.0"
 output_dir="$(cd "$(dirname "$0")" && pwd)/dist"
 application_identity=""
 installer_identity=""

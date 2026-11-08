@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: Apache-2.0
+# Copyright 2026 Called It Inc.
 """Static validation for the public packaging harness."""
 
 from __future__ import annotations
@@ -10,6 +12,11 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 PRODUCT = json.loads((ROOT / "product.json").read_text(encoding="utf-8"))
+_VERSION_FILE = ROOT.parent / "src" / "memstrata_client" / "_version.py"
+_FOUND = re.search(r'^__version__ = "([^"]+)"$', _VERSION_FILE.read_text(encoding="utf-8"), re.M)
+if _FOUND is None:
+    raise SystemExit(f"cannot read __version__ from {_VERSION_FILE}")
+VERSION = _FOUND.group(1)
 
 
 def require(condition: bool, message: str) -> None:
@@ -29,10 +36,34 @@ def main() -> int:
     )
     expected_pfn = f'{windows["identity_name"]}_xpfq096y27j6m'
     require(windows["package_family_name"] == expected_pfn, "unexpected PFN")
-    require(re.fullmatch(r"\d+\.\d+\.\d+\.\d+", "0.1.0.0") is not None, "bad version")
+    require(re.fullmatch(r"\d+\.\d+\.\d+", VERSION) is not None, f"bad package version {VERSION!r}")
+    msix_version = f"{VERSION}.0"
+
+    # Packaging must follow the package version: a stale copy would build an old version.
+    require(
+        PRODUCT["version"] == VERSION,
+        f"product.json version {PRODUCT['version']!r} != {VERSION!r}",
+    )
+    snap_text = (ROOT / "linux" / "snap" / "snapcraft.yaml").read_text(encoding="utf-8")
+    require(f"version: '{VERSION}'" in snap_text, "snapcraft.yaml version differs from the package")
+    pkg_script = (ROOT / "macos" / "build-pkg.sh").read_text(encoding="utf-8")
+    require(
+        f'version="{VERSION}"' in pkg_script,
+        "build-pkg.sh default version differs from the package",
+    )
+    msix_script = (ROOT / "windows" / "build-msix.ps1").read_text(encoding="utf-8")
+    require(
+        f'[string]$Version = "{msix_version}"' in msix_script,
+        "build-msix.ps1 default version differs",
+    )
+    snap_script = (ROOT / "linux" / "snap" / "build-snap.sh").read_text(encoding="utf-8")
+    require(
+        f"_{VERSION}_amd64.snap" in snap_script,
+        "build-snap.sh output name differs from the package",
+    )
 
     manifest = (ROOT / "windows" / "AppxManifest.xml.in").read_text(encoding="utf-8")
-    parsed = ET.fromstring(manifest.replace("@VERSION@", "0.1.0.0"))
+    parsed = ET.fromstring(manifest.replace("@VERSION@", msix_version))
     identity = parsed.find("{http://schemas.microsoft.com/appx/manifest/foundation/windows10}Identity")
     require(identity is not None, "Windows Identity missing")
     require(identity.attrib["Name"] == windows["identity_name"], "manifest identity mismatch")

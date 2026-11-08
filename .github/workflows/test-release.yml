@@ -10,16 +10,25 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
         with:
           python-version: "3.12"
-      - run: pip install build twine
+      - run: pip install "build==1.6.1" "twine==7.0.0"
+      - name: Read the package version from _version.py
+        run: |
+          python - <<'PY'
+          import pathlib
+          import re
+
+          text = pathlib.Path("src/memstrata_client/_version.py").read_text()
+          print(re.search(r'^__version__ = "([^"]+)"$', text, re.M).group(1))
+          PY
       - run: python tools/check_public_boundary.py
       - run: python packaging/validate.py
       - run: python -m build
       - run: python -m twine check dist/*
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: test-python-package
           path: dist/
@@ -33,10 +42,10 @@ jobs:
     permissions:
       id-token: write
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with:
           name: test-python-package
           path: dist/
-      - uses: pypa/gh-action-pypi-publish@release/v1
+      - uses: pypa/gh-action-pypi-publish@aef6c9b6e301dc803e1bc9133e9ce67ae9b0906b # v1.14.3
         with:
           repository-url: https://test.pypi.org/legacy/

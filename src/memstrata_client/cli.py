@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: Apache-2.0
+# Copyright 2026 Called It Inc.
 """Command-line interface for the public client."""
 
 from __future__ import annotations

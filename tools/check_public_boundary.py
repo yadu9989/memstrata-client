@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: Apache-2.0
+# Copyright 2026 Called It Inc.
 """Fail when the public repository crosses the MemStrata IP boundary."""
 
 from __future__ import annotations
@@ -11,11 +13,13 @@ ALLOWED_TOP_LEVEL = {
     ".gitattributes",
     ".gitignore",
     "CODE_OF_CONDUCT.md",
+    "CHANGELOG.md",
     "CONTRIBUTING.md",
     "LICENSE",
     "NOTICE",
     "README.md",
     "SECURITY.md",
+    "TRADEMARKS.md",
     "docs",
     "examples",
     "packaging",
@@ -25,14 +29,19 @@ ALLOWED_TOP_LEVEL = {
     "tools",
 }
 IGNORED_PARTS = {
+    ".DS_Store",
     ".git",
     ".flatpak-builder",
+    ".idea",
+    ".mypy_cache",
     ".pytest_cache",
     ".ruff_cache",
+    ".tox",
     ".venv",
     "__pycache__",
     "build",
     "dist",
+    "venv",
 }
 FORBIDDEN_IMPORT_PREFIXES = (
     "eval",

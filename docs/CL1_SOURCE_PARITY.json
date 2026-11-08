@@ -1,0 +1,21 @@
+{
+  "hash": "sha256 over the UTF-8 file text with LF line endings",
+  "files": [
+    {
+      "path": "src/memstrata_client/cl1.py",
+      "sha256": "fa90141ce268c8352246283503cb2957a2b1313266c112d9cf68a540e0fb1c1c"
+    },
+    {
+      "path": "src/memstrata_client/cl1_credentials.py",
+      "sha256": "bbbb619f3b3661ee2fc23b7c3504b7dc3284cf890141ca0e2864f65b34a9592d"
+    },
+    {
+      "path": "src/memstrata_client/mcp.py",
+      "sha256": "7fdb6224adbc689a1f32712add9fde4203e1cf9573d2dd6f9c174f9947156ae0"
+    },
+    {
+      "path": "src/memstrata_client/langchain.py",
+      "sha256": "5d0b42f7544ce2696125668724bf4b6a5f9972a8116a80716e2eb6c5a5e6756b"
+    }
+  ]
+}

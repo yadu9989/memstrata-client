@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: Apache-2.0
+# Copyright 2026 Called It Inc.
 """Public MemStrata runtime client.
 
 This package contains protocol, validation, and transport code only. It does
@@ -12,6 +14,7 @@ from memstrata_client.errors import (
     RuntimeFailure,
     RuntimeTimeout,
 )
+from memstrata_client.local import MemStrataClient
 from memstrata_client.models import (
     Assurance,
     Claim,
@@ -28,6 +31,7 @@ __all__ = [
     "Evidence",
     "MemoryItem",
     "MemStrata",
+    "MemStrataClient",
     "Message",
     "ProcessResult",
     "ProtocolError",

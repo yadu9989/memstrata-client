@@ -2,7 +2,7 @@
   "schema_version": 1,
   "product": "MemStrata Client",
   "runtime_command": "memstrata-eval-runtime",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "windows": {
     "identity_name": "8351CalledItInc.memstrata-client",
     "publisher": "CN=BACE8B9E-8F65-4CF8-A7D4-808FE337B2B7",

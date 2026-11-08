@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: Apache-2.0
+# Copyright 2026 Called It Inc.
 from __future__ import annotations
 
 import sys
@@ -52,3 +54,13 @@ def test_transport_suppresses_runtime_stderr_content() -> None:
         SubprocessTransport(command(code)).execute({"request": 1})
     assert secret not in str(caught.value)
     assert "diagnostic bytes suppressed" in str(caught.value)
+
+
+def test_transport_deadline_covers_a_runtime_that_never_reads_stdin() -> None:
+    import time
+
+    code = "import time; time.sleep(5)"
+    started = time.monotonic()
+    with pytest.raises(RuntimeTimeout):
+        SubprocessTransport(command(code), timeout=0.3).execute({"data": "x" * 6_000_000})
+    assert time.monotonic() - started < 4

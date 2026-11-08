@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: Apache-2.0
+# Copyright 2026 Called It Inc.
 """Fail-closed validation for memstrata.runtime/v1."""
 
 from __future__ import annotations

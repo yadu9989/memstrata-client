@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: Apache-2.0
+# Copyright 2026 Called It Inc.
 """Bounded JSON-lines subprocess transport."""
 
 from __future__ import annotations
@@ -19,6 +21,8 @@ SAFE_ENV_NAMES = (
     "PATH",
     "PATHEXT",
     "SYSTEMROOT",
+    "SYSTEMDRIVE",
+    "PROGRAMDATA",
     "WINDIR",
     "COMSPEC",
     "HOME",
@@ -65,11 +69,18 @@ class SubprocessTransport:
         safe_env = {name: value for name in SAFE_ENV_NAMES if (value := os.environ.get(name))}
         safe_env["PYTHONIOENCODING"] = "utf-8"
 
-        with tempfile.TemporaryFile() as stdout_file, tempfile.TemporaryFile() as stderr_file:
+        with (
+            tempfile.TemporaryFile() as input_file,
+            tempfile.TemporaryFile() as stdout_file,
+            tempfile.TemporaryFile() as stderr_file,
+        ):
+            # A Windows pipe write can block before communicate() starts its wait.
+            input_file.write(encoded)
+            input_file.seek(0)
             try:
                 process = subprocess.Popen(
                     self.command,
-                    stdin=subprocess.PIPE,
+                    stdin=input_file,
                     stdout=stdout_file,
                     stderr=stderr_file,
                     env=safe_env,
@@ -79,16 +90,11 @@ class SubprocessTransport:
                 raise RuntimeFailure(f"unable to start runtime: {exc}") from exc
 
             try:
-                assert process.stdin is not None
-                process.stdin.write(encoded)
-                process.stdin.close()
                 process.wait(timeout=self.timeout)
             except subprocess.TimeoutExpired as exc:
                 process.kill()
                 process.wait()
                 raise RuntimeTimeout(f"runtime exceeded {self.timeout:.3f}s deadline") from exc
-            except BrokenPipeError:
-                process.wait()
 
             stdout_size = stdout_file.tell()
             stderr_size = stderr_file.tell()

@@ -9,12 +9,12 @@ reviewed, or published.
 | Artifact | License | Channel | Contains |
 | --- | --- | --- | --- |
 | `memstrata-client` | Apache-2.0 | PyPI | API, CLI, transport, strict validation, mock |
-| MemStrata evaluation runtime | Commercial evaluation terms | OS stores/direct download | Signed entitlement enforcement and private engine |
+| MemStrata commercial runtime | Commercial terms | OS stores, direct download, and compiled platform wheels on PyPI under other package names | Signed entitlement enforcement and proprietary engine |
 
 The public repository never contains a runtime executable. Every OS packager
 requires an explicit local `--runtime`/`-RuntimeBinary` path and refuses to
 build without it. A release operator must verify the runtime digest against the
-private release manifest before packaging.
+runtime's release manifest before packaging.
 
 ## PyPI: Trusted Publishing
 
@@ -47,16 +47,16 @@ Release order:
 4. Create an annotated `vX.Y.Z` tag from a reviewed commit.
 5. Approve the production `pypi` environment only after the build job passes.
 
-The workflows refuse versions that do not match the tag/input and build from a
-clean checkout. A PyPI project is not considered created until the first
-Trusted Publishing upload succeeds.
+`release.yml` refuses a tag that does not equal `v` plus the version in
+`src/memstrata_client/_version.py` and builds from a clean checkout. Publishing
+actions are pinned by commit SHA; update the pins deliberately.
 
 ## Runtime package release gate
 
 No runtime package is publishable until all of these are recorded:
 
 - native binary built on the target operating system and architecture;
-- private release-manifest SHA-256 match;
+- release-manifest SHA-256 match;
 - package generated from a reviewed packager commit;
 - platform signature verified;
 - SBOM and provenance attached;
@@ -78,8 +78,8 @@ No runtime package is publishable until all of these are recorded:
 
 ## Microsoft Store
 
-The private product configuration carries Store ID `9MX65HPK0VX9` and the
-reserved package identity. The package manifest is a desktop/full-trust command
+The product configuration carries Store ID `9MX65HPK0VX9` and the reserved
+package identity. The package manifest is a desktop/full-trust command
 line companion, not a GUI. Build an x64 MSIX with
 `packaging/windows/build-msix.ps1`; inspect it with `makeappx unpack`; then run
 Windows App Certification Kit on a clean Windows 11 VM.

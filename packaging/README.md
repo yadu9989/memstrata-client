@@ -21,5 +21,5 @@ Static contract check:
 python packaging/validate.py
 ```
 
-The private release process must pin the public packager commit and verify the
-runtime SHA-256 before invoking these scripts.
+The release process must pin the packager commit and verify the runtime SHA-256
+before invoking these scripts.

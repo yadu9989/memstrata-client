@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: Apache-2.0
+# Copyright 2026 Called It Inc.
 """Synthetic runtime for integration testing; it contains no memory logic."""
 
 from __future__ import annotations

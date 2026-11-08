@@ -17,9 +17,9 @@ Before publishing:
 3. Run protocol, activation, refresh, upgrade, and remove/reinstall tests on a
    clean supported Ubuntu host.
 4. `snapcraft upload --release=edge <package.snap>`.
-5. Promote from `edge` only after Store review and design-partner validation.
+5. Promote from `edge` only after Store review and validation on a clean host.
 
-The package requests no interfaces because the prototype is offline and uses
+The package requests no interfaces because the current build is offline and uses
 stdin/stdout plus snap-owned state. Add `network` only when a reviewed lease
 client actually requires it.
 

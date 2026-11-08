@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# SPDX-License-Identifier: Apache-2.0
+# Copyright 2026 Called It Inc.
 set -euo pipefail
 
 if [[ $# -ne 3 || ! -f "$1" || ! -f "$2" || ! -f "$3" ]]; then

@@ -1,4 +1,6 @@
 #!/bin/sh
+# SPDX-License-Identifier: Apache-2.0
+# Copyright 2026 Called It Inc.
 set -eu
 state_root="${XDG_DATA_HOME:-$HOME/.var/app/io.github.yadu9989.MemStrataClient/data}/memstrata/eval-runtime"
 exec /app/libexec/memstrata-eval-runtime --state-dir "$state_root" "$@"

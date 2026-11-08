@@ -1,10 +1,12 @@
+# SPDX-License-Identifier: Apache-2.0
+# Copyright 2026 Called It Inc.
 [CmdletBinding()]
 param(
     [Parameter(Mandatory = $true)]
     [string]$RuntimeBinary,
 
     [ValidatePattern("^\d+\.\d+\.\d+\.\d+$")]
-    [string]$Version = "0.1.0.0",
+    [string]$Version = "0.2.0.0",
 
     [string]$OutputDirectory = (Join-Path $PSScriptRoot "dist"),
 

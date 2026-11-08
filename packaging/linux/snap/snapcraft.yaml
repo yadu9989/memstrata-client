@@ -1,6 +1,6 @@
 name: memstrata-client
 base: core24
-version: '0.1.0'
+version: '0.2.0'
 summary: Commercial runtime companion for the open MemStrata client
 description: |
   Installs the separately licensed MemStrata evaluation runtime. This package
