@@ -11,7 +11,9 @@ from memstrata_client.cl1 import CL1Client, CL1Error
 def test_expired_connection_explains_renewal_on_context_and_source_paths(detail, headers):
     response = httpx.Response(403, json={"detail": detail}, headers=headers)
     for call in (
-        lambda: CL1Client._result(response, project_id="project", source_ids=("note",), profile="standard_8k"),
+        lambda: CL1Client._result(
+            response, project_id="project", source_ids=("note",), profile="standard_8k"
+        ),
         lambda: CL1Client._source_response(response),
     ):
         with pytest.raises(CL1Error, match="Open Connections and choose Renew") as exc:
